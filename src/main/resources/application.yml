@@ -13,7 +13,7 @@ spring:
         - id: auth-server
           uri: lb://auth-server
           predicates:
-            - Path=/api/users/**
+            - Path=/users/**
       discovery:
         locator:
           enabled: true
