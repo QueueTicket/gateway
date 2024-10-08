@@ -51,9 +51,6 @@ public class JwtFilter implements GlobalFilter, Ordered {
             String userId = (String) cachedTokenData.get("userId");
             String userRole = (String) cachedTokenData.get("userRole");
 
-            System.out.println("redis userId : " + userId);
-            System.out.println("redis userRole : " + userRole);
-
             // 헤더에 캐싱된 사용자 정보 추가
             return this.addUserHeaders(exchange, userId, userRole)
                     .flatMap(updatedExchange -> chain.filter(updatedExchange));
@@ -82,8 +79,6 @@ public class JwtFilter implements GlobalFilter, Ordered {
 
                         redisTemplate.opsForHash().putAll(token, tokenData);
 
-                        System.out.println("userId : " + authResponse.getUserId());
-                        System.out.println("userRole : " + authResponse.getUserRole());
                         return this.addUserHeaders(exchange, authResponse.getUserId(), authResponse.getUserRole())
                                 .flatMap(updatedExchange -> chain.filter(updatedExchange));
                     } else {
